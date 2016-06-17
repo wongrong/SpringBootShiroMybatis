@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hhj.demo.springboot.dao.DemoDAO">
+    <resultMap id="BaseResultMap" type="hhj.demo.springboot.bean.Demo">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+        <result column="info" property="info" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, addtime, info
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from demo
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByWhereEntity" resultMap="BaseResultMap"
+        parameterType="hhj.demo.springboot.bean.Demo">
+        select
+        <include refid="Base_Column_List" />
+        from demo
+        <where>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="title != null">
+                AND title = #{title,jdbcType=VARCHAR}
+            </if>
+            <if test="addtime != null">
+                AND addtime = #{addtime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="info != null">
+                AND info = #{info,jdbcType=LONGVARCHAR}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from demo
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="hhj.demo.springboot.bean.Demo">
+        insert into demo (id, title, addtime,
+        info)
+        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
+        #{addtime,jdbcType=TIMESTAMP},
+        #{info,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="hhj.demo.springboot.bean.Demo">
+        insert into demo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="addtime != null">
+                addtime,
+            </if>
+            <if test="info != null">
+                info,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="info != null">
+                #{info,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="hhj.demo.springboot.bean.Demo">
+        update demo
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="addtime != null">
+                addtime = #{addtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="info != null">
+                info = #{info,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="hhj.demo.springboot.bean.Demo">
+        update demo
+        set title = #{title,jdbcType=VARCHAR},
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+        info = #{info,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from demo
+    </select>
+</mapper>

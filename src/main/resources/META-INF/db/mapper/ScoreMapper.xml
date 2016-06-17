@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.springboot.sample.dao.ScoreDao">
+    <resultMap id="BaseResultMap" type="org.springboot.sample.entity.Score">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="student_id" property="stuId" jdbcType="INTEGER" />
+        <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="FLOAT" />
+        <result column="exam_time" property="examTime" jdbcType="DATE" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, student_id, subject_name, score, exam_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from score
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from score
+    </select>
+</mapper>

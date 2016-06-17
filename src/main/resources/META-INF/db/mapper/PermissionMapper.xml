@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.springboot.sample.dao.PermissionDao">
+    <resultMap id="BaseResultMap" type="org.springboot.sample.entity.Permission">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="permissionname" property="permissionname" jdbcType="VARCHAR" />
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, permissionname, role_id
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+        parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from t_permission
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getPermissionList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+		FROM  t_permission  
+		where role_id = #{roleId,jdbcType=INTEGER}       
+    </select>    
+</mapper>
